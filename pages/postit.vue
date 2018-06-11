@@ -7,7 +7,8 @@
         <canvas class="areas" ref="areas" @click="canvasClick"></canvas>
       </div>
     </div>
-    <div class="detail">
+    <div class="detail" v-if="detailImage.path !== ''">
+      <img :src="detailImage && detailImage.path" />
     </div>
   </div>
 </template>
@@ -34,7 +35,8 @@ export default {
     ...mapGetters([
       'clientId',
       'postits',
-      'mainImage'
+      'mainImage',
+      'detailImage'
     ]),
     ...mapActions(['setDetailImage'])
   },
@@ -79,7 +81,7 @@ export default {
               }
             }
           }
-        },0)
+        },10)
     }
   },
   mounted: function () {
@@ -88,54 +90,54 @@ export default {
       height: 4032,
       width: 3024
     })
-    this.$store.dispatch('setPostits', [ {
-    path: '85.jpg',
+    setTimeout(() => this.$store.dispatch('setPostits', [ {
+    path: 'http://localhost:4000/85.jpg',
     x: 1207,
     y: 1914,
     w: 550,
     h: 344 },
   {
-    path: '86.jpg',
+    path: 'http://localhost:4000/86.jpg',
     x: 561,
     y: 1908,
     w: 547,
     h: 337 },
   {
-    path: '87.jpg',
+    path: 'http://localhost:4000/87.jpg',
     x: 1228,
     y: 1509,
     w: 551,
     h: 344 },
   {
-    path: '88.jpg',
+    path: 'http://localhost:4000/88.jpg',
     x: 598,
     y: 1531,
     w: 550,
     h: 343 },
   {
-    path: '89.jpg',
+    path: 'http://localhost:4000/89.jpg',
     x: 785,
     y: 2336,
     w: 545,
     h: 330 },
   {
-    path: '90.jpg',
+    path: 'http://localhost:4000/90.jpg',
     x: 1594,
     y: 2246,
     w: 607,
     h: 439 },
   {
-    path: '91.jpg',
+    path: 'http://localhost:4000/91.jpg',
     x: 1903,
     y: 1822,
     w: 577,
     h: 357 },
   {
-    path: '92.jpg',
+    path: 'http://localhost:4000/92.jpg',
     x: 1917,
     y: 1377,
     w: 574,
-    h: 366 } ])
+    h: 366 } ]), 0)
   }
 }
 </script>
