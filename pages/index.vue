@@ -67,7 +67,8 @@ export default {
   computed: {
     // mix the getters into computed with object spread operator
     ...mapGetters([
-      'clientId'
+      'clientId',
+      'uploadState'
     ])
   },
   methods: {
@@ -99,6 +100,14 @@ export default {
       if (!newFile && oldFile) {
         // remove
         console.log('remove', oldFile)
+      }
+    }
+  },
+  watch: {
+    uploadState() {
+      // should go in action, but see bug in socketio vuex
+      if (this.uploadState.status === 'done') {
+        this.$router.replace({ path: 'postit' })
       }
     }
   }
