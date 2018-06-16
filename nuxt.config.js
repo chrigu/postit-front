@@ -13,6 +13,9 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  css: [
+    'tachyons/css/tachyons.css'
+  ],
   plugins: [
     {src: '~/plugins/vue-socketio', ssr: false},
     {src: '~/plugins/vue-formatSize'}

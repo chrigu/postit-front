@@ -1,26 +1,25 @@
 <template>
-  <div class="example-simple">
+  <div class="postit">
     <h1>Postit</h1>
-    <div class="overview" v-if="mainImage.url !== ''">
-      <div class="image-wrapper">
-        <img :src="mainImage.url" ref="mainImageEl" />
-        <canvas class="areas" ref="areas" @click="canvasClick"></canvas>
+    <nuxt-link class="f6 grow no-underline br-pill ph3 pv2 mb2 dib white bg-mid-gray" to="/">New Photo</nuxt-link>
+    <div class="overview">
+      <div class="main overiew__main" v-if="mainImage.url !== ''">
+        <div class="image-wrapper">
+          <img :src="mainImage.url" ref="mainImageEl" />
+          <canvas class="areas" ref="areas" @click="canvasClick"></canvas>
+        </div>
       </div>
-    </div>
-    <div class="detail" v-if="detailImage.url !== ''">
-      <img :src="detailImage && detailImage.url" />
-      <p v-show="detailImage.text">
-        {{detailImage.text}}
-      </p>
+      <div class="detail overiew__detail" v-if="detailImage.url !== ''">
+        <img :src="detailImage && detailImage.url" />
+      </div>
+      <div class="meta overiew__meta">
+        <p v-show="detailImage.text">
+          {{detailImage.text}}
+        </p>
+      </div>
     </div>
   </div>
 </template>
-<style>
-.example-simple label.btn {
-  margin-bottom: 0;
-  margin-right: 1rem;
-}
-</style>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
@@ -101,60 +100,7 @@ export default {
               }
             }
           }
-        }, 10)
-    // this.$store.dispatch('setMainImage', {
-    //   url: 'http://localhost:4000/overview.jpg',
-    //   height: 4032,
-    //   width: 3024
-    // })
-  //   setTimeout(() => this.$store.dispatch('setPostits', [ {
-  //   path: 'http://localhost:4000/85.jpg',
-  //   x: 1207,
-  //   y: 1914,
-  //   w: 550,
-  //   h: 344 },
-  // {
-  //   path: 'http://localhost:4000/86.jpg',
-  //   x: 561,
-  //   y: 1908,
-  //   w: 547,
-  //   h: 337 },
-  // {
-  //   path: 'http://localhost:4000/87.jpg',
-  //   x: 1228,
-  //   y: 1509,
-  //   w: 551,
-  //   h: 344 },
-  // {
-  //   path: 'http://localhost:4000/88.jpg',
-  //   x: 598,
-  //   y: 1531,
-  //   w: 550,
-  //   h: 343 },
-  // {
-  //   path: 'http://localhost:4000/89.jpg',
-  //   x: 785,
-  //   y: 2336,
-  //   w: 545,
-  //   h: 330 },
-  // {
-  //   path: 'http://localhost:4000/90.jpg',
-  //   x: 1594,
-  //   y: 2246,
-  //   w: 607,
-  //   h: 439 },
-  // {
-  //   path: 'http://localhost:4000/91.jpg',
-  //   x: 1903,
-  //   y: 1822,
-  //   w: 577,
-  //   h: 357 },
-  // {
-  //   path: 'http://localhost:4000/92.jpg',
-  //   x: 1917,
-  //   y: 1377,
-  //   w: 574,
-  //   h: 366 } ]), 0)
+        }, 100)
   }
 }
 </script>
@@ -162,7 +108,7 @@ export default {
   .image-wrapper {
 
     position: relative;
-      max-width: 50%;
+      // max-width: 50%;
       margin: 1rem auto;
 
     & img {
@@ -176,6 +122,24 @@ export default {
       left: 0;
       width: 100%;
       height: 100%;
+    }
+  }
+  .overview {
+    display: grid;
+    grid-template-columns: 40fr 40fr 20fr;
+    grid-template-areas: "main detail meta";
+    grid-column-gap: 1rem;
+
+    &__main {
+      grid-area: main;
+    }
+
+    &__detail {
+      grid-area: detail;
+    }
+
+    &__meta {
+      grid-area: meta;
     }
   }
 </style>

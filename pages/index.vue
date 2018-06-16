@@ -2,7 +2,7 @@
   <div class="example-simple">
     <h1 id="example-title" class="example-title">Postit upload</h1>
     <div class="upload">
-      <ul>
+      <ul class="upload__list">
         <li v-for="(file) in files" :key="file.id">
           <span>{{file.name}}</span> -
           <span>{{file.size | formatSize}}</span> -
@@ -13,34 +13,34 @@
           <span v-else></span>
         </li>
       </ul>
-      <div class="example-btn">
-        <file-upload
-          class="btn btn-primary"
-          post-action="http://localhost:4000/upload"
-          extensions="gif,jpg,jpeg,png,webp"
-          accept="image/png,image/gif,image/jpeg,image/webp"
-          :multiple="false"
-          :size="1024 * 1024 * 10"
-          :data="{clientId: clientId}"
-          v-model="files"
-          @input-filter="inputFilter"
-          @input-file="inputFile"
-          ref="upload">
-          <i class="fa fa-plus"></i>
-          Select files
-        </file-upload>
-        <button type="button" class="btn btn-success" v-if="!$refs.upload || !$refs.upload.active" @click.prevent="$refs.upload.active = true">
-          <i class="fa fa-arrow-up" aria-hidden="true"></i>
-          Start Upload
-        </button>
+      <div class="upload-field">
+        <div>
+          <file-upload
+            class="f6 grow no-underline br-pill ph3 pv2 mb2 dib white bg-blue"
+            post-action="http://localhost:4000/upload"
+            extensions="gif,jpg,jpeg,png,webp"
+            accept="image/png,image/gif,image/jpeg,image/webp"
+            :multiple="false"
+            :size="1024 * 1024 * 10"
+            :data="{clientId: clientId}"
+            v-model="files"
+            @input-filter="inputFilter"
+            @input-file="inputFile"
+            ref="upload">
+            <i class="fa fa-plus"></i>
+            Select files
+          </file-upload>
+        </div>
+        <a class="f6 grow no-underline br-pill ph3 pv2 mb2 dib white bg-green" href="#0" v-if="!$refs.upload || !$refs.upload.active" @click.prevent="$refs.upload.active = true">Start Upload</a>
+
         <button type="button" class="btn btn-danger"  v-else @click.prevent="$refs.upload.active = false">
           <i class="fa fa-stop" aria-hidden="true"></i>
           Stop Upload
         </button>
       </div>
     </div>
-    <div class="pt-5">
-      Source code: <a href="https://github.com/lian-yue/vue-upload-component/blob/master/docs/views/examples/Simple.vue">/docs/views/examples/Simple.vue</a>
+    <div class="status" v-show="status !== ''">
+      <p>Status: {{status}}</p>
     </div>
   </div>
 </template>
@@ -62,6 +62,7 @@ export default {
   data() {
     return {
       files: [],
+      status: ''
     }
   },
   computed: {
@@ -106,10 +107,24 @@ export default {
   watch: {
     uploadState() {
       // should go in action, but see bug in socketio vuex
-      if (this.uploadState.status === 'done') {
+      const status = this.uploadState.status
+      if (status === 'done') {
         this.$router.replace({ path: 'postit' })
+      } else if (status === 'imageread') {
+        this.status = 'File uploaded'
+      } else if (status === 'histdone') {
+        this.status = 'Histogram calculated'
+      } else if (status === 'text') {
+        this.status = 'Detecting text'
       }
     }
   }
 }
 </script>
+<style scoped lang="scss">
+  .upload {
+    &__list {
+      margin-bottom: 1rem;
+    }
+  }
+</style>
