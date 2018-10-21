@@ -31,9 +31,9 @@
             Select files
           </file-upload>
         </div>
+        <input type="file" required @change="fileChanged" />
         <a class="f6 grow no-underline br-pill ph3 pv2 mb2 dib white bg-green" href="#0" v-if="!$refs.upload || !$refs.upload.active" @click.prevent="$refs.upload.active = true">Start Upload</a>
-
-        <button type="button" class="btn btn-danger"  v-else @click.prevent="$refs.upload.active = false">
+        <button type="button" class="btn btn-danger" v-else @click.prevent="$refs.upload.active = false">
           <i class="fa fa-stop" aria-hidden="true"></i>
           Stop Upload
         </button>
@@ -54,6 +54,9 @@
 <script>
 import FileUpload from 'vue-upload-component'
 import { mapGetters } from 'vuex'
+import gql from 'graphql-tag'
+import uploadsQuery from '../apollo/graphql/uploads'
+import uploadsMutation from '../apollo/graphql/uploadsMutation'
 
 export default {
   components: {
@@ -102,6 +105,27 @@ export default {
         // remove
         console.log('remove', oldFile)
       }
+    },
+    fileChanged({
+      target: {
+        validity,
+        files: [file]
+      }
+    }) {
+      console.log(validity, file);
+      this.$apollo.mutate({
+        mutation: uploadsMutation,
+        variables: { file },
+        update: (store, {data: {singleUpload}}) => {
+          console.log(singleUpload)
+          // const data = store.readQuery({ query: uploadsQuery })
+          // data.singleUpload.push(singleUpload)
+          // store.writeQuery({ query: uploadsQuery, data })
+        }
+
+      }).then(data => {
+        console.log('Done upvoting.');
+      });
     }
   },
   watch: {
