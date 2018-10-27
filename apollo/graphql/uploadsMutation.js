@@ -1,12 +1,10 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  mutation($file: Upload!) {
-    singleUpload(file: $file) {
+  mutation($file: Upload!, $projectId: ID!) {
+    singleUpload(file: $file, projectId: $projectId) {
       id
-      filename
-      mimetype
-      path
+      url
     }
   }
 `

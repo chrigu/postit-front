@@ -18,7 +18,8 @@ module.exports = {
   ],
   plugins: [
     // {src: '~/plugins/vue-socketio', ssr: false},
-    {src: '~/plugins/vue-formatSize'}
+    {src: '~/plugins/vue-formatSize'},
+    {src: '~/plugins/vee-validation'},
   ],
   /*
   ** Customize the progress bar color
@@ -42,7 +43,7 @@ module.exports = {
     clientConfigs: {
       default: {
         // required
-        httpEndpoint: 'http://localhost:4000',
+        httpEndpoint: 'http://localhost:4100',
         // optional
         // See https://www.apollographql.com/docs/link/links/http.html#options
         httpLinkOptions: {
@@ -50,7 +51,7 @@ module.exports = {
         },
         // You can use `wss` for secure connection (recommended in production)
         // Use `null` to disable subscriptions
-        wsEndpoint: 'ws://localhost:4000', // optional
+        wsEndpoint: 'ws://localhost:4100', // optional
         // LocalStorage token
         tokenName: 'apollo-token', // optional
         // Enable Automatic Query persisting with Apollo Engine
@@ -60,8 +61,8 @@ module.exports = {
         websocketsOnly: false // Optional
       },
       test: {
-        httpEndpoint: 'http://localhost:5000',
-        wsEndpoint: 'ws://localhost:5000',
+        httpEndpoint: 'http://localhost:4100',
+        wsEndpoint: 'ws://localhost:4100',
         tokenName: 'apollo-token'
       },
       // alternative: user path to config which returns exact same config options
@@ -69,7 +70,7 @@ module.exports = {
     }
   },
   build: {
-    vendor: ['vue-socket.io'],
+    // vendor: ['vue-socket.io'],
     /*
     ** Run ESLint on save
     */

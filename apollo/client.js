@@ -18,7 +18,7 @@ export default (ctx) => {
   // })
   // Set up subscription
   const wsLink = new WebSocketLink({
-    uri: `wss://localhost:4000/`,
+    uri: `wss://localhost:4000/subscriptions/`,
     options: {
       reconnect: true,
       // connectionParams: () => {

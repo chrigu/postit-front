@@ -112,7 +112,6 @@ export default {
         files: [file]
       }
     }) {
-      console.log(validity, file);
       this.$apollo.mutate({
         mutation: uploadsMutation,
         variables: { file },
