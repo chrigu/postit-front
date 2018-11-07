@@ -58,9 +58,9 @@ export default {
           // data.singleUpload.push(singleUpload)
           // store.writeQuery({ query: uploadsQuery, data })
         }
-      }).then(data => {
+      }).then(({ data }) => {
         console.log('Done uploading.', data);
-        this.subscribeToImageUpdates(data.data.singleUpload.id)
+        this.subscribeToImageUpdates(data.singleUpload.id)
       });
     },
     subscribeToImageUpdates(imageId) {
@@ -84,7 +84,9 @@ export default {
       })
     }
   },
-
+  mounted: function() {
+    console.log( this.$route.params.id)
+  }
 }
 </script>
 <style scoped lang="scss">
